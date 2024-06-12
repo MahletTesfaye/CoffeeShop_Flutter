@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myapp/src/screens/detail.dart';
-import 'package:myapp/src/utils/footer.dart';
-import '../bloc/coffee_bloc.dart';
+import 'package:myapp/src/components/footer.dart';
+import '../bloc/CoffeeItems/coffee_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,7 +63,7 @@ class HomePageState extends State<HomePage> {
                             Row(
                               children: [
                                 Text(
-                                  "Bilzen,Tanjungbalai",
+                                  "Addis Ababa, Ethiopia",
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 Icon(
@@ -97,12 +97,8 @@ class HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide.none,
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 12.0,
-                          ),
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
+                            padding: const EdgeInsets.only(left: 15.0, right: 8),
                             child: Icon(
                               Icons.search,
                               color: Colors.grey[400],
@@ -115,7 +111,7 @@ class HomePageState extends State<HomePage> {
                                 'assets/icons/icon_in_search.svg'),
                           ),
                           constraints: const BoxConstraints(
-                              minWidth: 200, maxWidth: 320, maxHeight: 40)),
+                              minWidth: 200, maxWidth: 400, maxHeight: 40)),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,

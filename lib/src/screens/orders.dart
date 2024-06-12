@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myapp/src/utils/footer.dart';
+import 'package:myapp/src/components/footer.dart';
 
 class OrdersList extends StatefulWidget {
   const OrdersList({super.key});
@@ -14,16 +13,20 @@ class OrdersListState extends State<OrdersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.brown,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back_sharp),
-              onPressed: () => context.pop(),
-            ),
             const Text(
               'Order History',
-              style: TextStyle(fontSize: 18, color: Colors.brown),
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.list_alt,
+                color: Colors.white,
+              ),
+              onPressed: () {},
             )
           ],
         ),

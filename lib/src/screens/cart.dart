@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myapp/src/utils/footer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/src/bloc/CartItems/cart_bloc.dart';
+import 'package:myapp/src/components/footer.dart';
+import 'package:myapp/src/screens/detail.dart';
 
 class AddToCart extends StatefulWidget {
   const AddToCart({super.key});
@@ -14,21 +16,82 @@ class AddToCartState extends State<AddToCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.brown,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back_sharp),
-              onPressed: () => context.pop(),
-            ),
             const Text(
-              'Your Cart',
-              style: TextStyle(fontSize: 18, color: Colors.brown),
-            )
+              'My Cart',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            IconButton(
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                onPressed: () {})
           ],
         ),
       ),
-      body: const Center(child: Text('No items in your cart yet')),
+      body: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          if (state is CartUpdated) {
+            final cartItems = state.cartItems;
+            if (cartItems.isEmpty) {
+              return const Center(
+                child: Text('No items in cart'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: cartItems.length,
+                itemBuilder: (context, index) {
+                  final item = cartItems[index];
+                  return Card(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailPage(coffeeItem: item)),
+                        );
+                      },
+                      child: ListTile(
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            item.image,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Text(item.name,
+                            style: const TextStyle(color: Colors.brown)),
+                        subtitle: Text('\$ ${item.price.toString()}',
+                            style: const TextStyle(color: Colors.brown)),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete,
+                              color: Colors.red, size: 18),
+                          onPressed: () {
+                            BlocProvider.of<CartBloc>(context).add(
+                              RemoveItemFromCart(item),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          } else {
+            return const Center(
+              child: Text('No items in cart'),
+            );
+          }
+        },
+      ),
       bottomNavigationBar: const BottomNavigation(
         currentIndex: 3,
       ),

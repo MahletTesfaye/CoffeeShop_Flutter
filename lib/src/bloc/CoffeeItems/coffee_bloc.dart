@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:myapp/src/utils/data.dart';
-import '../models/coffee_model.dart';
+import 'package:myapp/src/data/data.dart';
+import '../../models/coffee_model.dart';
 
 part 'coffee_event.dart';
 part 'coffee_state.dart';
@@ -46,5 +46,4 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
       emit(CoffeeLoaded(coffeeItems: filteredCoffeeItems));
     }
   }
-
 }

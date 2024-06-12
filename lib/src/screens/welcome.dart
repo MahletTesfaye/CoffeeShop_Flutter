@@ -9,10 +9,6 @@ class WelcomePage extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Image.network(
-          //   "https://img.freepik.com/free-photo/close-up-coffee-cup-wooden-table-steam-rising-generative-ai_188544-8921.jpg?w=826&t=st=1717004824~exp=1717005424~hmac=ba66490ea0c0ecc79d3728804504b0b5f386ae1bcaa14c2f69ad626eb105ab77",
-          //    fit: BoxFit.cover,
-          // ),
           Image.asset(
             'assets/images/coffee1.jpg',
             fit: BoxFit.cover,
