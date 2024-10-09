@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myapp/src/bloc/CartItems/cart_bloc.dart';
+import 'package:myapp/src/screens/auth/login.dart';
+import 'package:myapp/src/screens/auth/register.dart';
 import 'package:myapp/src/screens/cart.dart';
 import 'package:myapp/src/screens/favorites.dart';
 import 'package:myapp/src/screens/home.dart';
@@ -39,6 +41,20 @@ final GoRouter _router = GoRouter(
       path: '/welcome',
       builder: (context, state) {
         return const WelcomePage();
+      },
+    ),
+    GoRoute(
+      name: '/login',
+      path: '/login',
+      builder: (context, state) {
+        return const LoginPage();
+      },
+    ),
+    GoRoute(
+      name: '/register',
+      path: '/register',
+      builder: (context, state) {
+        return const RegisterPage();
       },
     ),
     GoRoute(

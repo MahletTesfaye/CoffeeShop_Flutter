@@ -49,7 +49,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   ElevatedButton(
-                    onPressed: () => {context.go('/home')},
+                    onPressed: () => {context.go('/login')},
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8)),
