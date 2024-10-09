@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myapp/firebase_options.dart';
 import 'package:myapp/src/bloc/CartItems/cart_bloc.dart';
 import 'package:myapp/src/screens/auth/login.dart';
 import 'package:myapp/src/screens/auth/register.dart';
@@ -11,6 +13,12 @@ import 'package:myapp/src/screens/orders.dart';
 import 'package:myapp/src/screens/welcome.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
