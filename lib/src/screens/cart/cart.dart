@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
 import 'package:myapp/src/components/footer.dart';
-import 'package:myapp/src/screens/detail.dart';
+import 'package:myapp/src/screens/detail/detail.dart';
 
 class AddToCart extends StatefulWidget {
   const AddToCart({super.key});

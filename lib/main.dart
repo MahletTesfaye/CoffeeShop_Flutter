@@ -9,10 +9,10 @@ import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
 import 'package:myapp/src/screens/auth/login.dart';
 import 'package:myapp/src/screens/auth/register.dart';
 import 'package:myapp/src/screens/cart/cart.dart';
-import 'package:myapp/src/screens/favorites.dart';
-import 'package:myapp/src/screens/home.dart';
-import 'package:myapp/src/screens/orders.dart';
-import 'package:myapp/src/screens/welcome.dart';
+import 'package:myapp/src/screens/favorites/favorites.dart';
+import 'package:myapp/src/screens/home/home.dart';
+import 'package:myapp/src/screens/orders/orders.dart';
+import 'package:myapp/src/screens/welcome/welcome.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
