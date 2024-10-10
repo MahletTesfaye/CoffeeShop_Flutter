@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myapp/src/bloc/CartItems/cart_bloc.dart';
+import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
 import 'package:myapp/src/models/coffee_model.dart';
 
 class DetailPage extends StatefulWidget {

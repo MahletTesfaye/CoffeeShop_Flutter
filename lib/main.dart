@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myapp/firebase_options.dart';
-import 'package:myapp/src/bloc/CartItems/cart_bloc.dart';
+import 'package:myapp/src/screens/auth/bloc/auth_bloc.dart';
+import 'package:myapp/src/screens/auth/repositories/auth_repository.dart';
+import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
 import 'package:myapp/src/screens/auth/login.dart';
 import 'package:myapp/src/screens/auth/register.dart';
-import 'package:myapp/src/screens/cart.dart';
+import 'package:myapp/src/screens/cart/cart.dart';
 import 'package:myapp/src/screens/favorites.dart';
 import 'package:myapp/src/screens/home.dart';
 import 'package:myapp/src/screens/orders.dart';
@@ -27,8 +29,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CartBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AuthBloc(authRepository: AuthRepository()),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: _router,
         title: 'Our wonderful Ethiopian Coffee shop',

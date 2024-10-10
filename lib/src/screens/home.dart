@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myapp/src/screens/detail.dart';
 import 'package:myapp/src/components/footer.dart';
-import '../bloc/CoffeeItems/coffee_bloc.dart';
+import 'package:myapp/src/screens/home/bloc/coffee_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,7 +98,8 @@ class HomePageState extends State<HomePage> {
                             borderSide: BorderSide.none,
                           ),
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 15.0, right: 8),
+                            padding:
+                                const EdgeInsets.only(left: 15.0, right: 8),
                             child: Icon(
                               Icons.search,
                               color: Colors.grey[400],
