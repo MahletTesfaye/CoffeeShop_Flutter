@@ -10,7 +10,7 @@ abstract class FavoritesState extends Equatable {
 class FavoritesLoading extends FavoritesState {}
 
 class FavoritesLoaded extends FavoritesState {
-  final List<String> favoriteItems;
+  final List<CoffeeItem> favoriteItems;
 
   const FavoritesLoaded(this.favoriteItems);
 

@@ -3,7 +3,6 @@ import 'package:myapp/src/models/coffee_model.dart';
 
 final Map<String, CoffeeItem> coffeeDictionary = {
     '1': CoffeeItem(
-      id: '1',
       name: 'Colombia Supremo',
       category: 'Cappucino',
       image: 'assets/images/coffee2.jpg',
@@ -11,7 +10,6 @@ final Map<String, CoffeeItem> coffeeDictionary = {
       price: 15.99,
     ),
     '2': CoffeeItem(
-      id: '2',
       name: 'Ethiopian Yirgacheffe',
       category: 'Machiato',
       image: 'assets/images/coffee3.jpg',
@@ -19,7 +17,6 @@ final Map<String, CoffeeItem> coffeeDictionary = {
       price: 18.99,
     ),
     '3': CoffeeItem(
-      id: '3',
       name: 'Guatemalan Huehuetenango',
       category: 'Machiato',
       image: 'assets/images/coffee4.jpg',
@@ -27,7 +24,6 @@ final Map<String, CoffeeItem> coffeeDictionary = {
       price: 16.99,
     ),
     '4': CoffeeItem(
-      id: '4',
       name: 'Kenyan AA',
       category: 'Latte',
       image: 'assets/images/coffee5.webp',
@@ -35,7 +31,6 @@ final Map<String, CoffeeItem> coffeeDictionary = {
       price: 19.99,
     ),
     '5': CoffeeItem(
-      id: '5',
       name: 'Cappucino',
       category: 'Dark Roast',
       image: 'assets/images/coffee6.jpg',
@@ -43,7 +38,6 @@ final Map<String, CoffeeItem> coffeeDictionary = {
       price: 17.99,
     ),
     '6': CoffeeItem(
-      id: '6',
       name: 'Kenyan AA',
       category: 'latte',
       image: 'assets/images/coffee7.jpg',
@@ -51,7 +45,6 @@ final Map<String, CoffeeItem> coffeeDictionary = {
       price: 19.99,
     ),
     '7': CoffeeItem(
-      id: '7',
       name: 'Ethiopian Yirgacheffe',
       category: 'Machiato',
       image: 'assets/images/coffee3.jpg',

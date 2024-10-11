@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +9,9 @@ import 'package:myapp/src/components/footer.dart';
 import 'bloc/coffee_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final File? profileImage;
+
+  const HomePage({super.key, this.profileImage});
 
   @override
   HomePageState createState() => HomePageState();
@@ -97,14 +101,36 @@ class HomePageState extends State<HomePage> {
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: SizedBox(
-                            width: 60,
-                            height: 80,
-                            child: Image.asset('assets/images/profile3.jpg'),
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.grey, width: 2),
+                            ),
+                            child: widget.profileImage != null
+                                ? ClipOval(
+                                    child: Image.file(
+                                      widget.profileImage!,
+                                      fit: BoxFit
+                                          .cover, // Ensures the image covers the circular area
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                  )
+                                : const Center(
+                                    child: Icon(
+                                      Icons.person,
+                                      size:
+                                          32, // Adjust size to fit well inside the circle
+                                      color: Colors.grey,
+                                    ),
+                                  ), // Default profile icon
                           ),
-                        )
+                        ),
                       ],
                     ),
+                    const SizedBox(height: 30),
                     TextField(
                       decoration: InputDecoration(
                           hintText: 'Search coffee',

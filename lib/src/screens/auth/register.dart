@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:myapp/src/screens/auth/bloc/auth_bloc.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -16,11 +19,15 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   String? generalError;
   bool isVisible = false;
   bool _isSubmitted = false; // Flag to check if form is submitted
+  File? _profileImage;
+
+  final ImagePicker _picker = ImagePicker();
 
   void _clearErrorMessage() {
     if (_formKey.currentState!.validate()) {
@@ -30,12 +37,26 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  Future<void> _selectProfileImage() async {
+    // Let user pick image from gallery
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path); // Set the selected image
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          context.go('/home');
+          if (_profileImage != null) {
+            context.go('/home', extra: _profileImage);
+          } else {
+            context.go('/home');
+          }
         } else if (state is AuthError) {
           // Display general error
           setState(() {
@@ -57,6 +78,21 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
+                  // Profile picture selection
+                  GestureDetector(
+                    onTap: _selectProfileImage, // Open image picker on tap
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!) // Display selected image
+                          : null,
+                      child: _profileImage == null
+                          ? const Icon(Icons.person,
+                              size: 40, color: Colors.grey)
+                          : null, // Icon if no image selected
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 500),
                     child: TextFormField(
@@ -67,7 +103,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       keyboardType: TextInputType.text,
                       validator: (value) {
-                        if (!_isSubmitted) return null; // Skip validation until form is submitted
+                        if (!_isSubmitted) {
+                          return null; // Skip validation until form is submitted
+                        }
                         if (value!.isEmpty) {
                           return 'Please enter your username';
                         }
@@ -92,7 +130,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (!_isSubmitted) return null; // Skip validation until form is submitted
+                        if (!_isSubmitted) {
+                          return null; // Skip validation until form is submitted
+                        }
                         if (value!.isEmpty) {
                           return 'Please enter your email';
                         } else if (!EmailValidator.validate(value)) {
@@ -130,7 +170,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       validator: (value) {
-                        if (!_isSubmitted) return null; // Skip validation until form is submitted
+                        if (!_isSubmitted) {
+                          return null; // Skip validation until form is submitted
+                        }
                         if (value!.isEmpty) {
                           return 'Please enter your password';
                         } else if (value.length < 6) {
@@ -156,7 +198,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(),
                       ),
                       validator: (value) {
-                        if (!_isSubmitted) return null; // Skip validation until form is submitted
+                        if (!_isSubmitted) {
+                          return null; // Skip validation until form is submitted
+                        }
                         if (value!.isEmpty) {
                           return 'Please enter your password confirmation';
                         } else if (value != _passwordController.text) {

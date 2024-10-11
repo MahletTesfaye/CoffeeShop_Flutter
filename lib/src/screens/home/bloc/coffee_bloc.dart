@@ -21,7 +21,6 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
       _allCoffeeItems = coffeeDictionary.values
           .map(
             (data) => CoffeeItem(
-              id: data.id,
               name: data.name,
               category: data.category,
               image: data.image,

@@ -7,22 +7,20 @@ abstract class FavoritesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadFavorites extends FavoritesEvent {}
-
 class AddFavorite extends FavoritesEvent {
-  final String item;
+  final CoffeeItem favoriteItem;
 
-  const AddFavorite(this.item);
+  const AddFavorite(this.favoriteItem);
 
   @override
-  List<Object> get props => [item];
+  List<Object> get props => [favoriteItem];
 }
 
 class RemoveFavorite extends FavoritesEvent {
-  final String item;
+  final CoffeeItem favoriteItem;
 
-  const RemoveFavorite(this.item);
+  const RemoveFavorite(this.favoriteItem);
 
   @override
-  List<Object> get props => [item];
+  List<Object> get props => [favoriteItem];
 }

@@ -17,7 +17,6 @@ class DetailPage extends StatefulWidget {
 class DetailPageState extends State<DetailPage> {
   final List<String> size = ['S', 'M', 'L'];
   String selectedSize = '';
-  Color _iconColor = Colors.white;
   late bool isInCart;
   late bool isFavorite;
 
@@ -34,64 +33,64 @@ class DetailPageState extends State<DetailPage> {
     isFavorite = (favoritesBloc.state is FavoritesLoaded)
         ? (favoritesBloc.state as FavoritesLoaded)
             .favoriteItems
-            .contains(widget.coffeeItem as String)
+            .contains(widget.coffeeItem)
         : false;
-
-    _iconColor = isFavorite ? Colors.red : Colors.white;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.brown,
-        foregroundColor: Colors.white,
-        titleTextStyle: const TextStyle(fontSize: 18),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Detail', style: TextStyle(color: Colors.white)),
-            IconButton(
-              icon: Icon(Icons.favorite, color: _iconColor),
-              onPressed: () {
-                final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
-
-                setState(() {
-                  if (isFavorite) {
-                    favoritesBloc
-                        .add(RemoveFavorite(widget.coffeeItem as String));
-                  } else {
-                    favoritesBloc.add(AddFavorite(widget.coffeeItem as String));
-                  }
-                });
-              },
-            ),
-          ],
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CartBloc, CartState>(
+          listener: (context, state) {
+            if (state is CartUpdated) {
+              setState(() {
+                isInCart = state.cartItems.contains(widget.coffeeItem);
+              });
+            }
+          },
         ),
-      ),
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<CartBloc, CartState>(
-            listener: (context, state) {
-              if (state is CartUpdated) {
-                setState(() {
-                  isInCart = state.cartItems.contains(widget.coffeeItem);
-                });
-              }
-            },
+        BlocListener<FavoritesBloc, FavoritesState>(
+          listener: (context, state) {
+            if (state is FavoritesLoaded) {
+              setState(() {
+                isFavorite =
+                    state.favoriteItems.contains(widget.coffeeItem);
+              });
+            }
+          },
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.brown,
+          foregroundColor: Colors.white,
+          titleTextStyle: const TextStyle(fontSize: 18),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Detail', style: TextStyle(color: Colors.white)),
+              IconButton(
+                icon: Icon(Icons.favorite,
+                    color: isFavorite ? Colors.red : Colors.white),
+                onPressed: () {
+                  final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
+
+                  setState(() {
+                    if (isFavorite) {
+                      favoritesBloc
+                          .add(RemoveFavorite(widget.coffeeItem));
+                    } else {
+                      favoritesBloc
+                          .add(AddFavorite(widget.coffeeItem));
+                    }
+                  });
+                },
+              ),
+            ],
           ),
-          BlocListener<FavoritesBloc, FavoritesState>(
-            listener: (context, state) {
-              if (state is FavoritesLoaded) {
-                setState(() {
-                  isFavorite = state.favoriteItems.contains(widget.coffeeItem as String);
-                  _iconColor = isFavorite ? Colors.red : Colors.white;
-                });
-              }
-            },
-          ),
-        ],
-        child: SingleChildScrollView(
+        ),
+        body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

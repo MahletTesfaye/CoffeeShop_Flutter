@@ -39,7 +39,7 @@ class AddToCartState extends State<AddToCart> {
             final cartItems = state.cartItems;
             if (cartItems.isEmpty) {
               return const Center(
-                child: Text('No items in cart'),
+                child: Text('No items in cart!'),
               );
             } else {
               return ListView.builder(
@@ -87,7 +87,7 @@ class AddToCartState extends State<AddToCart> {
             }
           } else {
             return const Center(
-              child: Text('No items in cart'),
+              child: Text('No items in cart!'),
             );
           }
         },

@@ -1,34 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/src/models/coffee_model.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
-  final List<String> _favorites = [];
-
   FavoritesBloc() : super(FavoritesLoading()) {
-    on<LoadFavorites>((event, emit) {
-      if (_favorites.isEmpty) {
-        emit(FavoritesEmpty());
-      } else {
-        emit(FavoritesLoaded(List.from(_favorites)));
-      }
-    });
-
     on<AddFavorite>((event, emit) {
-      _favorites.add(event.item);
-      emit(FavoritesLoaded(List.from(_favorites)));
+      if (state is FavoritesLoaded) {
+        emit(FavoritesLoaded(
+            List<CoffeeItem>.from((state as FavoritesLoaded).favoriteItems)
+              ..insert(0, event.favoriteItem)));
+      } else {
+        emit(FavoritesLoaded([event.favoriteItem]));
+      }
     });
 
     on<RemoveFavorite>((event, emit) {
-      _favorites.remove(event.item);
-      if (_favorites.isEmpty) {
-        emit(FavoritesEmpty());
-      } else {
-        emit(FavoritesLoaded(List.from(_favorites)));
-      }
+      emit(FavoritesLoaded(
+          List<CoffeeItem>.from((state as FavoritesLoaded).favoriteItems)
+            ..remove(event.favoriteItem)));
     });
   }
 }
-
