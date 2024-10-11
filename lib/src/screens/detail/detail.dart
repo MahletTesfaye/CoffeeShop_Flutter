@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
 import 'package:myapp/src/models/coffee_model.dart';
+import 'package:myapp/src/screens/favorites/bloc/favorites_bloc.dart';
 
 class DetailPage extends StatefulWidget {
   final CoffeeItem coffeeItem;
@@ -18,14 +19,25 @@ class DetailPageState extends State<DetailPage> {
   String selectedSize = '';
   Color _iconColor = Colors.white;
   late bool isInCart;
+  late bool isFavorite;
 
   @override
   void initState() {
     super.initState();
     final cartBloc = BlocProvider.of<CartBloc>(context);
+    final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
+
     isInCart = (cartBloc.state is CartUpdated)
         ? (cartBloc.state as CartUpdated).cartItems.contains(widget.coffeeItem)
         : false;
+
+    isFavorite = (favoritesBloc.state is FavoritesLoaded)
+        ? (favoritesBloc.state as FavoritesLoaded)
+            .favoriteItems
+            .contains(widget.coffeeItem as String)
+        : false;
+
+    _iconColor = isFavorite ? Colors.red : Colors.white;
   }
 
   @override
@@ -42,27 +54,43 @@ class DetailPageState extends State<DetailPage> {
             IconButton(
               icon: Icon(Icons.favorite, color: _iconColor),
               onPressed: () {
-                setState(
-                  () {
-                    _iconColor =
-                        _iconColor == Colors.white ? Colors.red : Colors.white;
-                  },
-                );
+                final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
+
+                setState(() {
+                  if (isFavorite) {
+                    favoritesBloc
+                        .add(RemoveFavorite(widget.coffeeItem as String));
+                  } else {
+                    favoritesBloc.add(AddFavorite(widget.coffeeItem as String));
+                  }
+                });
               },
             ),
           ],
         ),
       ),
-      body: BlocListener<CartBloc, CartState>(
-        listener: (context, state) {
-          if (state is CartUpdated) {
-            setState(
-              () {
-                isInCart = state.cartItems.contains(widget.coffeeItem);
-              },
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<CartBloc, CartState>(
+            listener: (context, state) {
+              if (state is CartUpdated) {
+                setState(() {
+                  isInCart = state.cartItems.contains(widget.coffeeItem);
+                });
+              }
+            },
+          ),
+          BlocListener<FavoritesBloc, FavoritesState>(
+            listener: (context, state) {
+              if (state is FavoritesLoaded) {
+                setState(() {
+                  isFavorite = state.favoriteItems.contains(widget.coffeeItem as String);
+                  _iconColor = isFavorite ? Colors.red : Colors.white;
+                });
+              }
+            },
+          ),
+        ],
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           child: Column(

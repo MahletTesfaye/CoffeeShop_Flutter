@@ -17,7 +17,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       if (state is CartUpdated) {
         final updatedCart =
             List<CoffeeItem>.from((state as CartUpdated).cartItems)
-              ..add(event.coffeeItem);
+              ..insert(0, event.coffeeItem);
         emit(CartUpdated(updatedCart));
       } else {
         emit(CartUpdated([event.coffeeItem]));

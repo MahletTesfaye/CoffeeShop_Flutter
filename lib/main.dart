@@ -9,6 +9,7 @@ import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
 import 'package:myapp/src/screens/auth/login.dart';
 import 'package:myapp/src/screens/auth/register.dart';
 import 'package:myapp/src/screens/cart/cart.dart';
+import 'package:myapp/src/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:myapp/src/screens/favorites/favorites.dart';
 import 'package:myapp/src/screens/home/home.dart';
 import 'package:myapp/src/screens/orders/orders.dart';
@@ -32,10 +33,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => CartBloc(),
+          create: (context) => AuthBloc(authRepository: AuthRepository()),
         ),
         BlocProvider(
-          create: (context) => AuthBloc(authRepository: AuthRepository()),
+          create: (context) => CartBloc(),
+        ),
+        BlocProvider<FavoritesBloc>(
+          create: (context) => FavoritesBloc(),
         ),
       ],
       child: MaterialApp.router(

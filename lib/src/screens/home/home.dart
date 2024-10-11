@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   late final CoffeeBloc _coffeeBloc;
+  late ScrollController _scrollController;
   final List<String> categories = [
     'All',
     'Cappucino',
@@ -42,11 +43,13 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _coffeeBloc = CoffeeBloc()..add(FetchCoffeeItems());
+    _scrollController = ScrollController();
     selectedCategory = categories[0];
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _coffeeBloc.close();
     super.dispose();
   }
@@ -270,8 +273,10 @@ class HomePageState extends State<HomePage> {
                     );
                   } else {
                     return Scrollbar(
+                      controller: _scrollController,
                       thumbVisibility: true,
                       child: SingleChildScrollView(
+                        controller: _scrollController,
                         child: Wrap(
                           children: [
                             for (final coffeeItem in (state).coffeeItems)
