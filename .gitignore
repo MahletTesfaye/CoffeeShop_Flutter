@@ -44,3 +44,4 @@ app.*.map.json
 
 # Exclude all APK files
 android/app/build/outputs/apk/**/*.apk
+android/app/build/outputs/flutter-apk/**/*.apk
