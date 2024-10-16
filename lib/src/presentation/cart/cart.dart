@@ -1,44 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapp/src/components/footer.dart';
-import 'package:myapp/src/screens/detail/detail.dart';
-import 'package:myapp/src/screens/favorites/bloc/favorites_bloc.dart';
+import 'package:myapp/src/presentation/cart/bloc/cart_bloc.dart';
+import 'package:myapp/src/common/footer.dart';
+import 'package:myapp/src/presentation/detail/detail.dart';
 
-class FavoritesList extends StatefulWidget {
-  const FavoritesList({super.key});
+class AddToCart extends StatefulWidget {
+  const AddToCart({super.key});
 
   @override
-  FavoritesListState createState() => FavoritesListState();
+  AddToCartState createState() => AddToCartState();
 }
 
-class FavoritesListState extends State<FavoritesList> {
+class AddToCartState extends State<AddToCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Favorites', style: TextStyle(color: Colors.white)),
-            Icon(Icons.favorite, color: Colors.red),
+            const Text(
+              'My Cart',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            IconButton(
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                onPressed: () {})
           ],
         ),
       ),
-      body: BlocBuilder<FavoritesBloc, FavoritesState>(
+      body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
-          if (state is FavoritesLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is FavoritesLoaded) {
-            if (state.favoriteItems.isEmpty) {
+          if (state is CartUpdated) {
+            final cartItems = state.cartItems;
+            if (cartItems.isEmpty) {
               return const Center(
-                child: Text("No favorite items!"),
+                child: Text('No items in cart!'),
               );
             } else {
               return ListView.builder(
-                itemCount: state.favoriteItems.length,
+                itemCount: cartItems.length,
                 itemBuilder: (context, index) {
-                  final item = state.favoriteItems[index];
+                  final item = cartItems[index];
                   return Card(
                     child: GestureDetector(
                       onTap: () {
@@ -64,11 +71,12 @@ class FavoritesListState extends State<FavoritesList> {
                         subtitle: Text('\$ ${item.price.toString()}',
                             style: const TextStyle(color: Colors.brown)),
                         trailing: IconButton(
-                          icon: const Icon(Icons.remove_circle,
-                              color: Colors.red),
+                          icon: const Icon(Icons.delete,
+                              color: Colors.red, size: 18),
                           onPressed: () {
-                            BlocProvider.of<FavoritesBloc>(context)
-                                .add(RemoveFavorite(item));
+                            BlocProvider.of<CartBloc>(context).add(
+                              RemoveItemFromCart(item),
+                            );
                           },
                         ),
                       ),
@@ -78,12 +86,14 @@ class FavoritesListState extends State<FavoritesList> {
               );
             }
           } else {
-            return const Center(child: Text('No favorite items!'));
+            return const Center(
+              child: Text('No items in cart!'),
+            );
           }
         },
       ),
       bottomNavigationBar: const BottomNavigation(
-        currentIndex: 1,
+        currentIndex: 3,
       ),
     );
   }

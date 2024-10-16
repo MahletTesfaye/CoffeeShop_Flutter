@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:myapp/src/screens/detail/detail.dart';
-import 'package:myapp/src/components/footer.dart';
+import 'package:myapp/src/presentation/detail/detail.dart';
+import 'package:myapp/src/common/footer.dart';
 import 'bloc/coffee_bloc.dart';
 
 class HomePage extends StatefulWidget {

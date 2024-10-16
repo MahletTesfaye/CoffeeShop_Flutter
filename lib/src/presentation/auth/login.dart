@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myapp/src/screens/auth/register.dart';
-import 'package:myapp/src/screens/auth/bloc/auth_bloc.dart';
+import 'package:myapp/src/presentation/auth/register.dart';
+import 'package:myapp/src/presentation/auth/bloc/auth_bloc.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String? generalError;
   bool isVisible = false;
-  final bool _isSubmitted = false; // Flag to check if form is submitted
+  bool _isSubmitted = false; // Flag to check if form is submitted
 
   void _clearErrorMessage() {
     if (_formKey.currentState!.validate()) {
@@ -82,7 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 500),
                     child: TextFormField(
-                      controller: _emailController,// Display the general error message below the input fields
+                      controller:
+                          _emailController, // Display the general error message below the input fields
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
@@ -98,7 +99,9 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       onChanged: (value) {
-                        _clearErrorMessage();
+                        if (_isSubmitted) {
+                          _clearErrorMessage();
+                        }
                       },
                     ),
                   ),
@@ -134,21 +137,18 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       onChanged: (value) {
-                        _clearErrorMessage();
+                        if (_isSubmitted) {
+                          _clearErrorMessage();
+                        }
                       },
                     ),
                   ),
-                  
-                  if (generalError != null) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      generalError!,
-                      style: const TextStyle(color: Colors.red, fontSize: 14),
-                    ),
-                  ],
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
+                      setState(() {
+                        _isSubmitted = true; // Set flag to true on submit
+                      });
                       if (_formKey.currentState!.validate()) {
                         context.read<AuthBloc>().add(
                               LoginRequested(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/src/components/footer.dart';
+import 'package:myapp/src/common/footer.dart';
 
 class OrdersList extends StatefulWidget {
   const OrdersList({super.key});

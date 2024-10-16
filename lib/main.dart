@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myapp/firebase_options.dart';
-import 'package:myapp/src/screens/auth/bloc/auth_bloc.dart';
-import 'package:myapp/src/screens/auth/repositories/auth_repository.dart';
-import 'package:myapp/src/screens/cart/bloc/cart_bloc.dart';
-import 'package:myapp/src/screens/auth/login.dart';
-import 'package:myapp/src/screens/auth/register.dart';
-import 'package:myapp/src/screens/cart/cart.dart';
-import 'package:myapp/src/screens/favorites/bloc/favorites_bloc.dart';
-import 'package:myapp/src/screens/favorites/favorites.dart';
-import 'package:myapp/src/screens/home/home.dart';
-import 'package:myapp/src/screens/orders/orders.dart';
-import 'package:myapp/src/screens/welcome/welcome.dart';
+import 'package:myapp/src/presentation/auth/bloc/auth_bloc.dart';
+import 'package:myapp/src/presentation/auth/repositories/auth_repository.dart';
+import 'package:myapp/src/presentation/cart/bloc/cart_bloc.dart';
+import 'package:myapp/src/presentation/auth/login.dart';
+import 'package:myapp/src/presentation/auth/register.dart';
+import 'package:myapp/src/presentation/cart/cart.dart';
+import 'package:myapp/src/presentation/favorites/bloc/favorites_bloc.dart';
+import 'package:myapp/src/presentation/favorites/favorites.dart';
+import 'package:myapp/src/presentation/home/home.dart';
+import 'package:myapp/src/presentation/orders/orders.dart';
+import 'package:myapp/src/presentation/welcome/welcome.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
