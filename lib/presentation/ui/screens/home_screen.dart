@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
+import 'package:myapp/presentation/ui/views/logout_dialog.dart';
 import 'package:myapp/presentation/widgets/footer.dart';
 import '../../blocs/coffee/coffee_bloc.dart';
 
@@ -99,33 +100,37 @@ class HomePageState extends State<HomePage> {
                             )
                           ],
                         ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.grey, width: 2),
+                        GestureDetector(
+                          onTap: () => showSignOutDialog(context),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    Border.all(color: Colors.grey, width: 2),
+                              ),
+                              child: widget.profileImage != null
+                                  ? ClipOval(
+                                      child: Image.file(
+                                        widget.profileImage!,
+                                        fit: BoxFit
+                                            .cover, // Ensures the image covers the circular area
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                    )
+                                  : const Center(
+                                      child: Icon(
+                                        Icons.person,
+                                        size:
+                                            32, // Adjust size to fit well inside the circle
+                                        color: Colors.grey,
+                                      ),
+                                    ), // Default profile icon
                             ),
-                            child: widget.profileImage != null
-                                ? ClipOval(
-                                    child: Image.file(
-                                      widget.profileImage!,
-                                      fit: BoxFit
-                                          .cover, // Ensures the image covers the circular area
-                                      width: 40,
-                                      height: 40,
-                                    ),
-                                  )
-                                : const Center(
-                                    child: Icon(
-                                      Icons.person,
-                                      size:
-                                          32, // Adjust size to fit well inside the circle
-                                      color: Colors.grey,
-                                    ),
-                                  ), // Default profile icon
                           ),
                         ),
                       ],
