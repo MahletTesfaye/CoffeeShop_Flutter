@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/core/theme/app_theme.dart';
 
 class SocialButton extends StatelessWidget {
   final String label;
@@ -19,9 +18,6 @@ class SocialButton extends StatelessWidget {
       label: Text(label),
       icon: icon,
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        foregroundColor: AppTheme.black,
-      ),
     );
   }
 }

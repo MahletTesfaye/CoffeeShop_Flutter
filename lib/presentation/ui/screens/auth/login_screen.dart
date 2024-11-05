@@ -31,13 +31,13 @@ class _LoginPageState extends State<LoginPage> {
                         builder: (context) => const RegisterPage()),
                   );
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Don't have an account?",
-                        style: TextStyle(color: AppTheme.brown)),
-                    SizedBox(width: 5),
-                    Text("Register"),
+                        style: TextStyle(color: Theme.of(context).primaryColor)),
+                    const SizedBox(width: 5),
+                    Text("Register",style: TextStyle(color: Theme.of(context).primaryColor)),
                   ],
                 ),
               ),
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                     Positioned(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        color: AppTheme.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         child: const Text(
                           'or',
                           style: TextStyle(color: AppTheme.brown, fontSize: 18),

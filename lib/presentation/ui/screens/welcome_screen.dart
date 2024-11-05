@@ -52,8 +52,9 @@ class WelcomePage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => {context.go('/login')},
                     style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 8)),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      backgroundColor: AppTheme.white,
+                    ),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

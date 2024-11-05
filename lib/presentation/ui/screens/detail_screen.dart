@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/blocs/cart/cart_bloc.dart';
 import 'package:myapp/data/models/coffee_model.dart';
 import 'package:myapp/presentation/blocs/favorites/favorites_bloc.dart';
+import 'package:myapp/presentation/ui/views/detail/ingredients_row.dart';
+import 'package:myapp/presentation/ui/views/detail/price_actions.dart';
+import 'package:myapp/presentation/ui/views/detail/size_selector.dart';
 
 class DetailPage extends StatefulWidget {
   final CoffeeItem coffeeItem;
@@ -40,7 +41,6 @@ class DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = Theme.of(context);
     return MultiBlocListener(
       listeners: [
         BlocListener<CartBloc, CartState>(
@@ -110,42 +110,7 @@ class DetailPageState extends State<DetailPage> {
               const SizedBox(height: 5),
               Text(widget.coffeeItem.description),
               const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Row(
-                    children: [
-                      Icon(Icons.star, color: AppTheme.yellow),
-                      Text(
-                        '4.8',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 18),
-                      ),
-                      Text('(230)')
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/coffee-bean-icon.svg',
-                        width: 25,
-                        height: 25,
-                        colorFilter: const ColorFilter.mode(
-                            AppTheme.brown, BlendMode.srcIn),
-                      ),
-                      const SizedBox(width: 6),
-                      SvgPicture.asset(
-                        'assets/icons/milk-icon.svg',
-                        width: 25,
-                        height: 25,
-                        colorFilter: const ColorFilter.mode(
-                            AppTheme.brown, BlendMode.srcIn),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              const IngredientsRow(),
               const SizedBox(height: 5),
               const Divider(color: AppTheme.lightBlack),
               const SizedBox(height: 5),
@@ -163,101 +128,18 @@ class DetailPageState extends State<DetailPage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (final size in size)
-                    SizedBox(
-                      width: 100,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedSize = size;
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            color: selectedSize == size
-                                ? AppTheme.brown
-                                : appTheme.primaryColor,
-                            width: selectedSize == size ? 2.0 : 1.0,
-                          ),
-                          foregroundColor: selectedSize == size
-                              ? AppTheme.brown
-                              : AppTheme.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          size,
-                          style: selectedSize == size
-                              ? const TextStyle(fontWeight: FontWeight.bold)
-                              : null,
-                        ),
-                      ),
-                    ),
-                ],
+              SizeSelector(
+                sizes: size,
+                selectedSize: selectedSize,
+                onSizeSelected: (size) => setState(() {
+                  selectedSize = size;
+                }),
               ),
               const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      const Text(
-                        'Price',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 6),
-                      Text('\$ ${widget.coffeeItem.price}'),
-                    ],
-                  ),
-                  const Spacer(),
-                  SizedBox(
-                    width: 130,
-                    height: 35,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        isInCart
-                            ? BlocProvider.of<CartBloc>(context)
-                                .add(RemoveItemFromCart(widget.coffeeItem))
-                            : BlocProvider.of<CartBloc>(context)
-                                .add(AddItemToCart(widget.coffeeItem));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.brown,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        foregroundColor: AppTheme.white,
-                      ),
-                      child: Text(
-                        isInCart ? 'Remove' : 'Add to Cart',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  SizedBox(
-                    width: 105,
-                    height: 35,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.go('/orders');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.brown,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      child: const Text(
-                        'Buy Now',
-                        style: TextStyle(color: AppTheme.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              PriceActions(
+                  price: widget.coffeeItem.price,
+                  isInCart: isInCart,
+                  coffeeItem: widget.coffeeItem)
             ],
           ),
         ),

@@ -19,7 +19,7 @@ class AppTheme {
     brightness: Brightness.light,
     primaryColor: brown,
     hintColor: lightBrown,
-    scaffoldBackgroundColor: white,
+    shadowColor: white,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: black),
       bodyMedium: TextStyle(color: mediumBlack),
@@ -31,13 +31,26 @@ class AppTheme {
         size: 20,
       ),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(brown),
+        padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: brown, width: 1),
+          ),
+        ),
+      ),
+    ),
   );
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: const Color.fromARGB(146, 255, 255, 255),
     hintColor: brown,
-    scaffoldBackgroundColor: black,
+    shadowColor: black,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: white),
       bodyMedium: TextStyle(color: mediumWhite),
@@ -47,6 +60,19 @@ class AppTheme {
       iconTheme: IconThemeData(
         color: white,
         size: 20,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(white),
+        padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(horizontal: 32, vertical: 12)),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: brown, width: 1),
+          ),
+        ),
       ),
     ),
   );

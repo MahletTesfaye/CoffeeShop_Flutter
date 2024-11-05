@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:myapp/application/services/google_sign_in_service.dart';
 import 'package:myapp/presentation/widgets/buttons/social_button.dart';
 
 class LoginSocialForm extends StatefulWidget {
@@ -12,45 +11,76 @@ class LoginSocialForm extends StatefulWidget {
   _LoginSocialFormState createState() => _LoginSocialFormState();
 }
 
-Future<void> signInWithGoogle(BuildContext context) async {
-  try {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) {
-      return;
-    }
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
-    final OAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    context.go('/home');
-  } catch (error) {
-    print('Google Sign-In error: $error');
-  }
-}
-
 class _LoginSocialFormState extends State<LoginSocialForm> {
+  final GoogleSignInService _googleSignInService = GoogleSignInService();
+  bool _isLoading = false;
+
+  Future<void> signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final userCredential = await _googleSignInService.signInWithGoogle();
+
+      if (mounted) {
+        if (userCredential != null) {
+          context.go('/home');
+        } else {
+          _showSnackBar('Google Sign-In failed');
+        }
+      }
+    } catch (error) {
+      if (mounted) {
+        _showSnackBar('Error signing in: $error');
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        SocialButton(
-            label: "Google",
-            onPressed: () {
-              signInWithGoogle(context);
-            },
-            icon: SvgPicture.asset('assets/icons/google-color-icon.svg',
-                height: 18, width: 18)),
-        const SizedBox(width: 10),
-        SocialButton(
-          label: "Apple",
-          onPressed: () {},
-          icon: const Icon(Icons.apple),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SocialButton(
+              label: "Google",
+              onPressed: () {
+                _isLoading ? null : signInWithGoogle;
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/google-color-icon.svg',
+                height: 18,
+                width: 18,
+              ),
+            ),
+            const SizedBox(width: 10),
+            SocialButton(
+              label: "Apple",
+              onPressed: () {},
+              icon: const Icon(Icons.apple),
+            ),
+          ],
         ),
+        if (_isLoading)
+          const Padding(
+            padding: EdgeInsets.only(top: 16.0),
+            child: CircularProgressIndicator(),
+          ),
       ],
     );
   }
