@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/blocs/cart/cart_bloc.dart';
 import 'package:myapp/presentation/widgets/footer.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
@@ -16,18 +17,18 @@ class AddToCartState extends State<AddToCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown,
+        backgroundColor: AppTheme.brown,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
               'My Cart',
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(fontSize: 18, color: AppTheme.white),
             ),
             IconButton(
                 icon: const Icon(
                   Icons.shopping_cart,
-                  color: Colors.white,
+                  color: AppTheme.white,
                 ),
                 onPressed: () {})
           ],
@@ -67,12 +68,12 @@ class AddToCartState extends State<AddToCart> {
                           ),
                         ),
                         title: Text(item.name,
-                            style: const TextStyle(color: Colors.brown)),
+                            style: const TextStyle(color: AppTheme.brown)),
                         subtitle: Text('\$ ${item.price.toString()}',
-                            style: const TextStyle(color: Colors.brown)),
+                            style: const TextStyle(color: AppTheme.brown)),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete,
-                              color: Colors.red, size: 18),
+                              color: AppTheme.red, size: 18),
                           onPressed: () {
                             BlocProvider.of<CartBloc>(context).add(
                               RemoveItemFromCart(item),

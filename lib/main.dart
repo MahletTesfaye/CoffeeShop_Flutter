@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/data/repositories/auth_repository_impl.dart';
 import 'package:myapp/firebase_options.dart';
 import 'package:myapp/presentation/blocs/auth/auth_bloc.dart';
@@ -39,9 +40,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: router,
         title: 'Our wonderful Ethiopian Coffee shop',
-        theme: ThemeData(
-          useMaterial3: true,
-        ),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
       ),
     );

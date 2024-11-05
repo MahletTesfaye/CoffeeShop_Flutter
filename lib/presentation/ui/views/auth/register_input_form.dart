@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/core/validators/auth_validator.dart';
 import 'package:myapp/presentation/blocs/auth/auth_bloc.dart';
 import 'package:myapp/presentation/widgets/inputs/custom_text_input.dart';
@@ -54,7 +55,7 @@ class _RegisterInputFormState extends State<RegisterInputForm> {
                   ? FileImage(_profileImage!)
                   : null,
               child: _profileImage == null
-                  ? const Icon(Icons.person, size: 40, color: Colors.grey)
+                  ? const Icon(Icons.person, size: 40, color: AppTheme.grey)
                   : null,
             ),
           ),
@@ -92,7 +93,7 @@ class _RegisterInputFormState extends State<RegisterInputForm> {
             suffixIcon: IconButton(
               icon: Icon(
                 _isVisible ? Icons.visibility : Icons.visibility_off,
-                color: Colors.grey,
+                color: AppTheme.grey,
               ),
               onPressed: () {
                 setState(() {

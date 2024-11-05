@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/widgets/footer.dart';
 
 class OrdersList extends StatefulWidget {
@@ -13,18 +14,18 @@ class OrdersListState extends State<OrdersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown,
+        backgroundColor: AppTheme.brown,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
               'Order History',
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(fontSize: 18, color: AppTheme.white),
             ),
             IconButton(
               icon: const Icon(
                 Icons.list_alt,
-                color: Colors.white,
+                color: AppTheme.white,
               ),
               onPressed: () {},
             )

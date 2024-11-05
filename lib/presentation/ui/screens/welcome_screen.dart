@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
+import "package:myapp/core/theme/app_theme.dart";
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -23,8 +24,8 @@ class WelcomePage extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Colors.black,
-                      Colors.transparent,
+                      AppTheme.black,
+                      AppTheme.transparent,
                     ]),
               ),
               child: Column(
@@ -36,7 +37,7 @@ class WelcomePage extends StatelessWidget {
                       "Coffee so good, your taste buds will love it.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppTheme.white,
                         fontSize: 44,
                       ),
                     ),
@@ -44,7 +45,7 @@ class WelcomePage extends StatelessWidget {
                   const Text(
                     "The best grain, the finest roast, the powerful flavor.",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppTheme.white,
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -58,12 +59,12 @@ class WelcomePage extends StatelessWidget {
                       children: [
                         Text(
                           "Let's get Started",
-                          style: TextStyle(color: Colors.brown, fontSize: 18),
+                          style: TextStyle(color: AppTheme.brown, fontSize: 18),
                         ),
                         SizedBox(width: 5),
                         Icon(
                           Icons.arrow_forward,
-                          color: Colors.brown,
+                          color: AppTheme.brown,
                         ),
                       ],
                     ),

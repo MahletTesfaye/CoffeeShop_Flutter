@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:myapp/core/theme/app_theme.dart';
+// import 'package:myapp/core/theme/app_theme.dart';
 
 class BottomNavigation extends StatefulWidget {
   final int currentIndex;
@@ -13,19 +15,19 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
+    // final appTheme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        color: Colors.white,
       ),
       child: GNav(
         gap: 10,
         tabActiveBorder: const Border(
-          bottom: BorderSide(color: Colors.brown, width: 1),
+          bottom: BorderSide(color: AppTheme.brown, width: 1),
         ),
-        color: Colors.brown,
-        activeColor: Colors.brown,
+        color: AppTheme.brown,
+        activeColor: AppTheme.brown,
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
         selectedIndex: widget.currentIndex,
         tabs: [

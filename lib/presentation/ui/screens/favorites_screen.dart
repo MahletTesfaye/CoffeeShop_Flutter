@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/widgets/footer.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
 import 'package:myapp/presentation/blocs/favorites/favorites_bloc.dart';
@@ -16,12 +17,12 @@ class FavoritesListState extends State<FavoritesList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown,
+        backgroundColor: AppTheme.brown,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Favorites', style: TextStyle(color: Colors.white)),
-            Icon(Icons.favorite, color: Colors.red),
+            Text('Favorites', style: TextStyle(color: AppTheme.white)),
+            Icon(Icons.favorite, color: AppTheme.red),
           ],
         ),
       ),
@@ -58,12 +59,12 @@ class FavoritesListState extends State<FavoritesList> {
                           ),
                         ),
                         title: Text(item.name,
-                            style: const TextStyle(color: Colors.brown)),
+                            style: const TextStyle(color: AppTheme.brown)),
                         subtitle: Text('\$ ${item.price.toString()}',
-                            style: const TextStyle(color: Colors.brown)),
+                            style: const TextStyle(color: AppTheme.brown)),
                         trailing: IconButton(
                           icon: const Icon(Icons.remove_circle,
-                              color: Colors.red),
+                              color: AppTheme.red),
                           onPressed: () {
                             BlocProvider.of<FavoritesBloc>(context)
                                 .add(RemoveFavorite(item));

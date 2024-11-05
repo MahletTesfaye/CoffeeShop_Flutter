@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/blocs/cart/cart_bloc.dart';
 import 'package:myapp/data/models/coffee_model.dart';
 import 'package:myapp/presentation/blocs/favorites/favorites_bloc.dart';
@@ -39,6 +40,7 @@ class DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
     return MultiBlocListener(
       listeners: [
         BlocListener<CartBloc, CartState>(
@@ -54,8 +56,7 @@ class DetailPageState extends State<DetailPage> {
           listener: (context, state) {
             if (state is FavoritesLoaded) {
               setState(() {
-                isFavorite =
-                    state.favoriteItems.contains(widget.coffeeItem);
+                isFavorite = state.favoriteItems.contains(widget.coffeeItem);
               });
             }
           },
@@ -63,26 +64,23 @@ class DetailPageState extends State<DetailPage> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.brown,
-          foregroundColor: Colors.white,
+          backgroundColor: AppTheme.brown,
+          foregroundColor: AppTheme.white,
           titleTextStyle: const TextStyle(fontSize: 18),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Detail', style: TextStyle(color: Colors.white)),
+              const Text('Detail', style: TextStyle(color: AppTheme.white)),
               IconButton(
                 icon: Icon(Icons.favorite,
-                    color: isFavorite ? Colors.red : Colors.white),
+                    color: isFavorite ? AppTheme.red : AppTheme.white),
                 onPressed: () {
                   final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
-
                   setState(() {
                     if (isFavorite) {
-                      favoritesBloc
-                          .add(RemoveFavorite(widget.coffeeItem));
+                      favoritesBloc.add(RemoveFavorite(widget.coffeeItem));
                     } else {
-                      favoritesBloc
-                          .add(AddFavorite(widget.coffeeItem));
+                      favoritesBloc.add(AddFavorite(widget.coffeeItem));
                     }
                   });
                 },
@@ -117,7 +115,7 @@ class DetailPageState extends State<DetailPage> {
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.star, color: Colors.yellow),
+                      Icon(Icons.star, color: AppTheme.yellow),
                       Text(
                         '4.8',
                         style: TextStyle(
@@ -134,7 +132,7 @@ class DetailPageState extends State<DetailPage> {
                         width: 25,
                         height: 25,
                         colorFilter: const ColorFilter.mode(
-                            Colors.brown, BlendMode.srcIn),
+                            AppTheme.brown, BlendMode.srcIn),
                       ),
                       const SizedBox(width: 6),
                       SvgPicture.asset(
@@ -142,14 +140,14 @@ class DetailPageState extends State<DetailPage> {
                         width: 25,
                         height: 25,
                         colorFilter: const ColorFilter.mode(
-                            Colors.brown, BlendMode.srcIn),
+                            AppTheme.brown, BlendMode.srcIn),
                       ),
                     ],
                   )
                 ],
               ),
               const SizedBox(height: 5),
-              const Divider(color: Colors.black26),
+              const Divider(color: AppTheme.lightBlack),
               const SizedBox(height: 5),
               const Text(
                 'Description',
@@ -180,13 +178,13 @@ class DetailPageState extends State<DetailPage> {
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
                             color: selectedSize == size
-                                ? Colors.brown
-                                : Colors.black,
+                                ? AppTheme.brown
+                                : appTheme.primaryColor,
                             width: selectedSize == size ? 2.0 : 1.0,
                           ),
                           foregroundColor: selectedSize == size
-                              ? Colors.brown
-                              : Colors.black,
+                              ? AppTheme.brown
+                              : AppTheme.black,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -229,10 +227,10 @@ class DetailPageState extends State<DetailPage> {
                                 .add(AddItemToCart(widget.coffeeItem));
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.brown,
+                        backgroundColor: AppTheme.brown,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppTheme.white,
                       ),
                       child: Text(
                         isInCart ? 'Remove' : 'Add to Cart',
@@ -248,13 +246,13 @@ class DetailPageState extends State<DetailPage> {
                         context.go('/orders');
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.brown,
+                        backgroundColor: AppTheme.brown,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
                       child: const Text(
                         'Buy Now',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: AppTheme.white),
                       ),
                     ),
                   ),

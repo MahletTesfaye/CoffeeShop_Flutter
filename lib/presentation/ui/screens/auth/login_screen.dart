@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/ui/screens/auth/register_screen.dart';
 import 'package:myapp/presentation/ui/views/auth/login_input_form.dart';
 import 'package:myapp/presentation/ui/views/auth/login_social_form.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Don't have an account?",
-                        style: TextStyle(color: Colors.brown)),
+                        style: TextStyle(color: AppTheme.brown)),
                     SizedBox(width: 5),
                     Text("Register"),
                   ],
@@ -48,15 +49,15 @@ class _LoginPageState extends State<LoginPage> {
                         constraints: const BoxConstraints(maxWidth: 500),
                         child: const Divider(
                           thickness: 1,
-                          color: Colors.grey,
+                          color: AppTheme.grey,
                         )),
                     Positioned(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        color: Colors.white,
+                        color: AppTheme.white,
                         child: const Text(
                           'or',
-                          style: TextStyle(color: Colors.brown, fontSize: 18),
+                          style: TextStyle(color: AppTheme.brown, fontSize: 18),
                         ),
                       ),
                     ),

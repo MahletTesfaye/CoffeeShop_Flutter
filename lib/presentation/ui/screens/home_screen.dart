@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:myapp/core/theme/app_theme.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
 import 'package:myapp/presentation/ui/views/logout_dialog.dart';
 import 'package:myapp/presentation/widgets/footer.dart';
@@ -30,12 +31,11 @@ class HomePageState extends State<HomePage> {
   ];
   late String selectedCategory;
 
-  // Function to launch the map
   Future<void> _openMap() async {
     if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
       await MapLauncher.showMarker(
         mapType: MapType.google,
-        coords: Coords(9.03, 38.74), // Coordinates for Addis Ababa
+        coords: Coords(9.03, 38.74),
         title: "Addis Ababa",
         description: "Capital city of Ethiopia",
       );
@@ -69,7 +69,7 @@ class HomePageState extends State<HomePage> {
             children: [
               Container(
                 height: 240,
-                color: Colors.black87,
+                color: AppTheme.darkBlack,
                 padding: const EdgeInsets.all(30.0),
                 child: Column(
                   children: [
@@ -81,7 +81,7 @@ class HomePageState extends State<HomePage> {
                           children: [
                             const Text(
                               "Location",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: AppTheme.white),
                             ),
                             GestureDetector(
                               onTap: _openMap,
@@ -89,11 +89,11 @@ class HomePageState extends State<HomePage> {
                                 children: [
                                   Text(
                                     "Addis Ababa, Ethiopia",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: AppTheme.white),
                                   ),
                                   Icon(
                                     Icons.location_on,
-                                    color: Colors.white,
+                                    color: AppTheme.white,
                                   ),
                                 ],
                               ),
@@ -110,14 +110,14 @@ class HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border:
-                                    Border.all(color: Colors.grey, width: 2),
+                                    Border.all(color: AppTheme.grey, width: 2),
                               ),
                               child: widget.profileImage != null
                                   ? ClipOval(
                                       child: Image.file(
                                         widget.profileImage!,
                                         fit: BoxFit
-                                            .cover, // Ensures the image covers the circular area
+                                            .cover, 
                                         width: 40,
                                         height: 40,
                                       ),
@@ -126,10 +126,10 @@ class HomePageState extends State<HomePage> {
                                       child: Icon(
                                         Icons.person,
                                         size:
-                                            32, // Adjust size to fit well inside the circle
-                                        color: Colors.grey,
+                                            32, 
+                                        color: AppTheme.grey,
                                       ),
-                                    ), // Default profile icon
+                                    ),
                             ),
                           ),
                         ),
@@ -140,10 +140,10 @@ class HomePageState extends State<HomePage> {
                       decoration: InputDecoration(
                           hintText: 'Search coffee',
                           hintStyle: TextStyle(
-                            color: Colors.grey[400],
+                            color: AppTheme.grey.withOpacity(0.6),
                             fontSize: 16.0,
                           ),
-                          fillColor: Colors.grey[800],
+                          fillColor: AppTheme.grey.withOpacity(0.8),
                           filled: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -154,7 +154,7 @@ class HomePageState extends State<HomePage> {
                                 const EdgeInsets.only(left: 15.0, right: 8),
                             child: Icon(
                               Icons.search,
-                              color: Colors.grey[400],
+                              color: AppTheme.grey.withOpacity(0.6),
                             ),
                           ),
                           suffixIcon: Padding(
@@ -166,7 +166,7 @@ class HomePageState extends State<HomePage> {
                           constraints: const BoxConstraints(
                               minWidth: 200, maxWidth: 400, maxHeight: 40)),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppTheme.white,
                         fontSize: 16.0,
                       ),
                     ),
@@ -197,10 +197,10 @@ class HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(4),
                             child: Container(
                               padding: const EdgeInsets.only(left: 5, right: 5),
-                              color: Colors.red,
+                              color: AppTheme.red,
                               child: const Text(
                                 'Promo',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: AppTheme.white),
                               ),
                             ),
                           ),
@@ -209,11 +209,11 @@ class HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 5),
-                                color: Colors.black,
+                                color: AppTheme.black,
                                 child: const Text(
                                   'Buy One Get',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppTheme.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
                                     letterSpacing: 5,
@@ -222,11 +222,11 @@ class HomePageState extends State<HomePage> {
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 5),
-                                color: Colors.black,
+                                color: AppTheme.black,
                                 child: const Text(
                                   'One Free',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppTheme.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
                                     letterSpacing: 5,
@@ -272,13 +272,13 @@ class HomePageState extends State<HomePage> {
                         },
                         style: selectedCategory == category
                             ? ElevatedButton.styleFrom(
-                                backgroundColor: Colors.brown)
+                                backgroundColor: AppTheme.brown)
                             : null,
                         child: Text(
                           category,
                           style: selectedCategory == category
-                              ? const TextStyle(color: Colors.white)
-                              : const TextStyle(color: Colors.brown),
+                              ? const TextStyle(color: AppTheme.white)
+                              : TextStyle(color: Theme.of(context).primaryColor),
                         ),
                       ),
                     ),
