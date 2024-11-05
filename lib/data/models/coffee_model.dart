@@ -4,6 +4,8 @@ class CoffeeItem {
   final String image;
   final String description;
   final double price;
+  final double rate;
+  final double review;
 
   CoffeeItem({
     required this.name,
@@ -11,6 +13,7 @@ class CoffeeItem {
     required this.image,
     required this.description,
     required this.price,
+    required this.rate,
+    required this.review,
   });
-
 }

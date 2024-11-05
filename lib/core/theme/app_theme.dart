@@ -20,6 +20,7 @@ class AppTheme {
     primaryColor: brown,
     hintColor: lightBrown,
     shadowColor: white,
+    highlightColor: black,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: black),
       bodyMedium: TextStyle(color: mediumBlack),
@@ -51,6 +52,7 @@ class AppTheme {
     primaryColor: const Color.fromARGB(146, 255, 255, 255),
     hintColor: brown,
     shadowColor: black,
+    highlightColor: white,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: white),
       bodyMedium: TextStyle(color: mediumWhite),

@@ -7,6 +7,8 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee2.jpg',
     description: 'A smooth and chocolatey coffee from Colombia',
     price: 15.99,
+    rate: 4.8,
+    review: 230,
   ),
   '2': CoffeeItem(
     name: 'Ethiopian Yirgacheffe',
@@ -14,6 +16,8 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee3.jpg',
     description: 'A floral and citrusy coffee from Ethiopia',
     price: 18.99,
+    rate: 4.8,
+    review: 230,
   ),
   '3': CoffeeItem(
     name: 'Guatemalan Huehuetenango',
@@ -21,6 +25,8 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee4.jpg',
     description: 'A spicy and caramel-like coffee from Guatemala',
     price: 16.99,
+    rate: 4.8,
+    review: 230,
   ),
   '4': CoffeeItem(
     name: 'Kenyan AA',
@@ -28,6 +34,8 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee5.webp',
     description: 'A vibrant and fruity coffee from Kenya',
     price: 19.99,
+    rate: 4.8,
+    review: 230,
   ),
   '5': CoffeeItem(
     name: 'Cappucino',
@@ -35,6 +43,8 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee6.jpg',
     description: 'An earthy and syrupy coffee from Indonesia',
     price: 17.99,
+    rate: 4.8,
+    review: 230,
   ),
   '6': CoffeeItem(
     name: 'Kenyan AA',
@@ -42,6 +52,8 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee7.jpg',
     description: 'A vibrant and fruity coffee from Kenya',
     price: 19.99,
+    rate: 4.8,
+    review: 230,
   ),
   '7': CoffeeItem(
     name: 'Ethiopian Yirgacheffe',
@@ -49,7 +61,12 @@ final Map<String, CoffeeItem> coffeeDictionary = {
     image: 'assets/images/coffee3.jpg',
     description: 'A floral and citrusy coffee from Ethiopia',
     price: 18.99,
+    rate: 4.8,
+    review: 230,
   ),
 };
 
-final List<String> coffeeCategories = ['All', ...{for (var item in coffeeDictionary.values) item.category}];
+final List<String> coffeeCategories = [
+  'All',
+  ...{for (var item in coffeeDictionary.values) item.category}
+];

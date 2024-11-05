@@ -26,6 +26,8 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
               image: data.image,
               description: data.description,
               price: data.price,
+              rate: data.rate,
+              review: data.review,
             ),
           )
           .toList();
