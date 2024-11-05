@@ -27,7 +27,9 @@ class _TopContentState extends State<TopContent> {
 
   void _onSearchChanged(String query) {
     setState(() {
-      _filteredItems = _searchService.searchItems(query, allItems);
+      _filteredItems.clear();
+      _filteredItems =
+          _searchService.searchItems(query, allItems).toSet().toList();
     });
   }
 
