@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/core/theme/app_theme.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
 
 class SizeSelector extends StatelessWidget {
   final List<String> sizes;
@@ -42,7 +42,9 @@ class SizeSelector extends StatelessWidget {
               style: TextStyle(
                 fontWeight:
                     selectedSize == size ? FontWeight.bold : FontWeight.normal,
-                color: selectedSize == size ? AppTheme.brown : Theme.of(context).primaryColor,
+                color: selectedSize == size
+                    ? AppTheme.brown
+                    : Theme.of(context).primaryColor,
               ),
             ),
           ),

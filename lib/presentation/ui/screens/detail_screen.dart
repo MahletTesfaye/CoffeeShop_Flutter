@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/presentation/blocs/cart/cart_bloc.dart';
-import 'package:myapp/data/models/coffee_model.dart';
-import 'package:myapp/presentation/blocs/favorites/favorites_bloc.dart';
+import 'package:myapp/application/bloc/cart/cart_bloc.dart';
+import 'package:myapp/domain/entities/coffee_entity.dart';
+import 'package:myapp/application/bloc/favorites/favorites_bloc.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
 import 'package:myapp/presentation/ui/views/detail/ingredients_row.dart';
 import 'package:myapp/presentation/ui/views/detail/price_actions.dart';
 import 'package:myapp/presentation/ui/views/detail/size_selector.dart';
@@ -18,9 +18,10 @@ class DetailPage extends StatefulWidget {
 
 class DetailPageState extends State<DetailPage> {
   final List<String> size = ['S', 'M', 'L'];
-  String selectedSize = '';
-  late bool isInCart;
-  late bool isFavorite;
+
+  late ValueNotifier<String> selectedSizeNotifier;
+  late ValueNotifier<bool> isInCartNotifier;
+  late ValueNotifier<bool> isFavoriteNotifier;
 
   @override
   void initState() {
@@ -28,15 +29,29 @@ class DetailPageState extends State<DetailPage> {
     final cartBloc = BlocProvider.of<CartBloc>(context);
     final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
 
-    isInCart = (cartBloc.state is CartUpdated)
-        ? (cartBloc.state as CartUpdated).cartItems.contains(widget.coffeeItem)
-        : false;
+    selectedSizeNotifier = ValueNotifier<String>('');
+    isInCartNotifier = ValueNotifier<bool>(
+      cartBloc.state is CartUpdated
+          ? (cartBloc.state as CartUpdated)
+              .cartItems
+              .contains(widget.coffeeItem)
+          : false,
+    );
+    isFavoriteNotifier = ValueNotifier<bool>(
+      favoritesBloc.state is FavoritesLoaded
+          ? (favoritesBloc.state as FavoritesLoaded)
+              .favoriteItems
+              .contains(widget.coffeeItem)
+          : false,
+    );
+  }
 
-    isFavorite = (favoritesBloc.state is FavoritesLoaded)
-        ? (favoritesBloc.state as FavoritesLoaded)
-            .favoriteItems
-            .contains(widget.coffeeItem)
-        : false;
+  @override
+  void dispose() {
+    selectedSizeNotifier.dispose();
+    isInCartNotifier.dispose();
+    isFavoriteNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,18 +61,16 @@ class DetailPageState extends State<DetailPage> {
         BlocListener<CartBloc, CartState>(
           listener: (context, state) {
             if (state is CartUpdated) {
-              setState(() {
-                isInCart = state.cartItems.contains(widget.coffeeItem);
-              });
+              isInCartNotifier.value =
+                  state.cartItems.contains(widget.coffeeItem);
             }
           },
         ),
         BlocListener<FavoritesBloc, FavoritesState>(
           listener: (context, state) {
             if (state is FavoritesLoaded) {
-              setState(() {
-                isFavorite = state.favoriteItems.contains(widget.coffeeItem);
-              });
+              isFavoriteNotifier.value =
+                  state.favoriteItems.contains(widget.coffeeItem);
             }
           },
         ),
@@ -71,18 +84,24 @@ class DetailPageState extends State<DetailPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Detail', style: TextStyle(color: AppTheme.white)),
-              IconButton(
-                icon: Icon(Icons.favorite,
-                    color: isFavorite ? AppTheme.red : AppTheme.white),
-                onPressed: () {
-                  final favoritesBloc = BlocProvider.of<FavoritesBloc>(context);
-                  setState(() {
-                    if (isFavorite) {
-                      favoritesBloc.add(RemoveFavorite(widget.coffeeItem));
-                    } else {
-                      favoritesBloc.add(AddFavorite(widget.coffeeItem));
-                    }
-                  });
+              ValueListenableBuilder<bool>(
+                valueListenable: isFavoriteNotifier,
+                builder: (context, isFavorite, _) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      color: isFavorite ? AppTheme.red : AppTheme.white,
+                    ),
+                    onPressed: () {
+                      final favoritesBloc =
+                          BlocProvider.of<FavoritesBloc>(context);
+                      if (isFavorite) {
+                        favoritesBloc.add(RemoveFavorite(widget.coffeeItem));
+                      } else {
+                        favoritesBloc.add(AddFavorite(widget.coffeeItem));
+                      }
+                    },
+                  );
                 },
               ),
             ],
@@ -95,7 +114,7 @@ class DetailPageState extends State<DetailPage> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   widget.coffeeItem.image,
                   width: double.infinity,
                   height: 200,
@@ -128,18 +147,29 @@ class DetailPageState extends State<DetailPage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 5),
-              SizeSelector(
-                sizes: size,
-                selectedSize: selectedSize,
-                onSizeSelected: (size) => setState(() {
-                  selectedSize = size;
-                }),
+              ValueListenableBuilder<String>(
+                valueListenable: selectedSizeNotifier,
+                builder: (context, selectedSize, _) {
+                  return SizeSelector(
+                    sizes: size,
+                    selectedSize: selectedSize,
+                    onSizeSelected: (size) {
+                      selectedSizeNotifier.value = size;
+                    },
+                  );
+                },
               ),
               const SizedBox(height: 5),
-              PriceActions(
-                  price: widget.coffeeItem.price,
-                  isInCart: isInCart,
-                  coffeeItem: widget.coffeeItem)
+              ValueListenableBuilder<bool>(
+                valueListenable: isInCartNotifier,
+                builder: (context, isInCart, _) {
+                  return PriceActions(
+                    price: widget.coffeeItem.price,
+                    isInCart: isInCart,
+                    coffeeItem: widget.coffeeItem,
+                  );
+                },
+              ),
             ],
           ),
         ),

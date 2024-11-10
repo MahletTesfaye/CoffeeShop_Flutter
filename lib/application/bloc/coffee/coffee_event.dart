@@ -9,13 +9,14 @@ abstract class CoffeeEvent extends Equatable {
 
 class FetchCoffeeItems extends CoffeeEvent {}
 
+class FetchCoffeeCategories extends CoffeeEvent {}
+
 class FilterCoffeeByCategory extends CoffeeEvent {
   final String category;
-  const FilterCoffeeByCategory(this.category);
+  const FilterCoffeeByCategory({required this.category});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [category];
 }
 
 class ResetCoffeeFilter extends CoffeeEvent {}
-

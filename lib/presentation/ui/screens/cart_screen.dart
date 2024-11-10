@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/presentation/blocs/cart/cart_bloc.dart';
-import 'package:myapp/presentation/widgets/footer.dart';
+import 'package:myapp/application/bloc/cart/cart_bloc.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
+import 'package:myapp/presentation/ui/widgets/footer.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
 
 class AddToCart extends StatefulWidget {
@@ -60,7 +60,7 @@ class AddToCartState extends State<AddToCart> {
                       child: ListTile(
                         leading: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
+                          child: Image.network(
                             item.image,
                             width: 50,
                             height: 50,
@@ -68,9 +68,11 @@ class AddToCartState extends State<AddToCart> {
                           ),
                         ),
                         title: Text(item.name,
-                            style: TextStyle(color: Theme.of(context).highlightColor)),
+                            style: TextStyle(
+                                color: Theme.of(context).highlightColor)),
                         subtitle: Text('\$ ${item.price.toString()}',
-                            style: TextStyle(color: Theme.of(context).highlightColor)),
+                            style: TextStyle(
+                                color: Theme.of(context).highlightColor)),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete,
                               color: AppTheme.red, size: 18),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/data/models/coffee_model.dart';
+import 'package:myapp/domain/entities/coffee_entity.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
 
 class CoffeeItemCard extends StatelessWidget {
@@ -29,7 +29,7 @@ class CoffeeItemCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   coffeeItem.image,
                   width: 160,
                   height: 100,

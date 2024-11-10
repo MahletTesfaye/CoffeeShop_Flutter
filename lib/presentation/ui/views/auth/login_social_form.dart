@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myapp/application/services/google_sign_in_service.dart';
-import 'package:myapp/presentation/widgets/buttons/social_button.dart';
+import 'package:myapp/presentation/ui/widgets/buttons/social_button.dart';
 
 class LoginSocialForm extends StatefulWidget {
   const LoginSocialForm({super.key});

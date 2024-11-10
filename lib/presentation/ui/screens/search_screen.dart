@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/application/services/search_service.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/data/models/coffee_model.dart';
+import 'package:myapp/domain/entities/coffee_entity.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
 
 class SearchPage extends StatefulWidget {
@@ -14,7 +14,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final SearchService _searchService = SearchService();
-  List<CoffeeItem> _filteredItems = [];
+
+  late ValueNotifier<List<CoffeeItem>> _filteredItemsNotifier;
 
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -22,7 +23,8 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    _filteredItems = widget.items;
+    _filteredItemsNotifier = ValueNotifier<List<CoffeeItem>>(widget.items);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_focusNode);
     });
@@ -32,6 +34,7 @@ class _SearchPageState extends State<SearchPage> {
   void dispose() {
     _searchController.dispose();
     _focusNode.dispose();
+    _filteredItemsNotifier.dispose();
     super.dispose();
   }
 
@@ -52,32 +55,36 @@ class _SearchPageState extends State<SearchPage> {
             border: InputBorder.none,
           ),
           onChanged: (query) {
-            setState(() {
-              _filteredItems = _searchService.searchItems(query, widget.items);
-            });
+            _filteredItemsNotifier.value =
+                _searchService.searchItems(query, widget.items);
           },
         ),
       ),
-      body: _filteredItems.isNotEmpty
-          ? ListView.builder(
-              itemCount: _filteredItems.length,
-              itemBuilder: (context, index) {
-                final coffeeItem = _filteredItems[index];
-                return ListTile(
-                  title: Text(coffeeItem.name),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailPage(coffeeItem: coffeeItem),
-                      ),
+      body: ValueListenableBuilder<List<CoffeeItem>>(
+        valueListenable: _filteredItemsNotifier,
+        builder: (context, filteredItems, _) {
+          return filteredItems.isNotEmpty
+              ? ListView.builder(
+                  itemCount: filteredItems.length,
+                  itemBuilder: (context, index) {
+                    final coffeeItem = filteredItems[index];
+                    return ListTile(
+                      title: Text(coffeeItem.name),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetailPage(coffeeItem: coffeeItem),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-            )
-          : const Center(child: Text('No results found')),
+                )
+              : const Center(child: Text('No results found'));
+        },
+      ),
     );
   }
 }

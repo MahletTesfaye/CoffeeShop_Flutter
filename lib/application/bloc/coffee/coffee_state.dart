@@ -13,10 +13,12 @@ class CoffeeLoading extends CoffeeState {}
 
 class CoffeeLoaded extends CoffeeState {
   final List<CoffeeItem> coffeeItems;
+  final List<String>? coffeeCategories;
 
-  const CoffeeLoaded({required this.coffeeItems});
+  const CoffeeLoaded({required this.coffeeItems, this.coffeeCategories});
+
   @override
-  List<Object> get props => [coffeeItems];
+  List<Object> get props => [coffeeItems, coffeeCategories!];
 }
 
 class CoffeeError extends CoffeeState {

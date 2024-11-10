@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:myapp/domain/repositories/auth_repository.dart';
-import 'package:myapp/data/models/user_model.dart' as custom_user;
+import 'package:myapp/domain/entities/user_entity.dart' as custom_user;
 
 class AuthRepositoryImpl implements AuthRepository {
   final firebase_auth.FirebaseAuth firebaseAuth =

@@ -7,6 +7,7 @@ class CustomTextInput extends StatefulWidget {
   final TextInputType keyboardType;
   final bool obscureText;
   final FormFieldValidator<String>? validator;
+  final String? errorText;
   final ValueChanged<String>? onChanged;
   final Widget? suffixIcon;
 
@@ -20,6 +21,7 @@ class CustomTextInput extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.suffixIcon,
+    this.errorText,
   });
 
   @override

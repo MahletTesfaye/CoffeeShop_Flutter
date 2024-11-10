@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/presentation/widgets/footer.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
+import 'package:myapp/presentation/ui/widgets/footer.dart';
 import 'package:myapp/presentation/ui/screens/detail_screen.dart';
-import 'package:myapp/presentation/blocs/favorites/favorites_bloc.dart';
+import 'package:myapp/application/bloc/favorites/favorites_bloc.dart';
 
 class FavoritesList extends StatefulWidget {
   const FavoritesList({super.key});
@@ -51,7 +51,7 @@ class FavoritesListState extends State<FavoritesList> {
                       child: ListTile(
                         leading: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
+                          child: Image.network(
                             item.image,
                             width: 50,
                             height: 50,

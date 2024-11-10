@@ -1,4 +1,4 @@
-import 'package:myapp/data/models/coffee_model.dart';
+import 'package:myapp/domain/entities/coffee_entity.dart';
 
 class SearchService {
   List<CoffeeItem> searchItems(String query, List<CoffeeItem> items) {

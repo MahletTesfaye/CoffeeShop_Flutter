@@ -2,35 +2,42 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myapp/application/services/location_service.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/data/data.dart';
-import 'package:myapp/data/models/coffee_model.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
+import 'package:myapp/domain/entities/coffee_entity.dart';
 import 'package:myapp/presentation/ui/screens/search_screen.dart';
 import 'package:myapp/presentation/ui/views/logout_dialog.dart';
 import 'package:myapp/application/services/search_service.dart';
 
 class TopContent extends StatefulWidget {
   final File? profileImage;
-  const TopContent({super.key, required this.profileImage});
+  final List<CoffeeItem> allItems;
+
+  const TopContent({
+    super.key,
+    required this.profileImage,
+    required this.allItems,
+  });
 
   @override
   State<TopContent> createState() => _TopContentState();
 }
 
 class _TopContentState extends State<TopContent> {
-  final List<CoffeeItem> allItems = [
-    ...{for (var item in coffeeDictionary.values) item}
-  ];
   final TextEditingController _searchController = TextEditingController();
   final SearchService _searchService = SearchService();
-  List<CoffeeItem> _filteredItems = [];
+  final ValueNotifier<List<CoffeeItem>> _filteredItemsNotifier =
+      ValueNotifier([]);
 
   void _onSearchChanged(String query) {
-    setState(() {
-      _filteredItems.clear();
-      _filteredItems =
-          _searchService.searchItems(query, allItems).toSet().toList();
-    });
+    _filteredItemsNotifier.value =
+        _searchService.searchItems(query, widget.allItems).toSet().toList();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _filteredItemsNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -129,10 +136,17 @@ class _TopContentState extends State<TopContent> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SearchPage(
-                          items: _filteredItems.isNotEmpty
-                              ? _filteredItems
-                              : allItems),
+                      builder: (context) =>
+                          ValueListenableBuilder<List<CoffeeItem>>(
+                        valueListenable: _filteredItemsNotifier,
+                        builder: (context, filteredItems, _) {
+                          return SearchPage(
+                            items: filteredItems.isNotEmpty
+                                ? filteredItems
+                                : widget.allItems,
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -148,7 +162,7 @@ class _TopContentState extends State<TopContent> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   'assets/images/coffee4.jpg',
                   width: double.infinity,
                   height: 120,
@@ -204,7 +218,7 @@ class _TopContentState extends State<TopContent> {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

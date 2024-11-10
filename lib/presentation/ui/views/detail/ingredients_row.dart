@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myapp/core/theme/app_theme.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
 
 class IngredientsRow extends StatelessWidget {
   const IngredientsRow({super.key});

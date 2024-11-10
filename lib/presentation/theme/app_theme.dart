@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/core/theme/app_color.dart';
+import 'package:myapp/presentation/theme/app_color.dart';
 
 class AppTheme {
   static const Color white = AppColors.white;

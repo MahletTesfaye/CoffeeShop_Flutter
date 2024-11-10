@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/data/data.dart';
-import 'package:myapp/presentation/blocs/coffee/coffee_bloc.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
 
 class CoffeeCategory extends StatelessWidget {
+  final List<String> categories;
   final ValueNotifier<String> selectedCategoryNotifier;
-  final CoffeeBloc coffeeBloc;
+  final Function(String) onCategorySelected;
 
-  const CoffeeCategory(
-      {super.key,
-      required this.coffeeBloc,
-      required this.selectedCategoryNotifier});
+  const CoffeeCategory({
+    super.key,
+    required this.categories,
+    required this.selectedCategoryNotifier,
+    required this.onCategorySelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,41 +20,31 @@ class CoffeeCategory extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: [
-            for (final category in coffeeCategories)
-              Container(
-                padding: const EdgeInsets.only(left: 6),
-                child: ValueListenableBuilder<String>(
-                  valueListenable: selectedCategoryNotifier,
-                  builder: (context, selectedCategory, _) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        if (category == 'All') {
-                          coffeeBloc.add(
-                            FetchCoffeeItems(),
-                          );
-                        } else {
-                          coffeeBloc.add(
-                            FilterCoffeeByCategory(category),
-                          );
-                        }
-                        selectedCategoryNotifier.value = category;
-                      },
+          children: categories.map((category) {
+            return Container(
+              padding: const EdgeInsets.only(left: 6),
+              child: ValueListenableBuilder<String>(
+                valueListenable: selectedCategoryNotifier,
+                builder: (context, selectedCategory, _) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      onCategorySelected(category);
+                      selectedCategoryNotifier.value = category;
+                    },
+                    style: selectedCategory == category
+                        ? ElevatedButton.styleFrom(backgroundColor: AppTheme.brown)
+                        : null,
+                    child: Text(
+                      category,
                       style: selectedCategory == category
-                          ? ElevatedButton.styleFrom(
-                              backgroundColor: AppTheme.brown)
-                          : null,
-                      child: Text(
-                        category,
-                        style: selectedCategory == category
-                            ? const TextStyle(color: AppTheme.white)
-                            : TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                    );
-                  },
-                ),
+                          ? const TextStyle(color: AppTheme.white)
+                          : TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                  );
+                },
               ),
-          ],
+            );
+          }).toList(),
         ),
       ),
     );

@@ -5,7 +5,7 @@ class CoffeeItem {
   final String description;
   final double price;
   final double rate;
-  final double review;
+  final int review;
 
   CoffeeItem({
     required this.name,

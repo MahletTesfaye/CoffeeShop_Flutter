@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-// import 'package:myapp/core/theme/app_theme.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
+// import 'package:myapp/presentation/theme/app_theme.dart';
 
 class BottomNavigation extends StatefulWidget {
   final int currentIndex;
@@ -15,7 +15,6 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
-    // final appTheme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
       decoration: const BoxDecoration(

@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
-import "package:myapp/core/theme/app_theme.dart";
+import "package:myapp/presentation/theme/app_theme.dart";
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -10,7 +10,7 @@ class WelcomePage extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
+          Image.network(
             'assets/images/coffee1.jpg',
             fit: BoxFit.cover,
           ),
@@ -52,7 +52,8 @@ class WelcomePage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => {context.go('/login')},
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
                       backgroundColor: AppTheme.white,
                     ),
                     child: const Row(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/presentation/widgets/footer.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
+import 'package:myapp/presentation/ui/widgets/footer.dart';
 
 class OrdersList extends StatefulWidget {
   const OrdersList({super.key});

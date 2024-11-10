@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myapp/core/theme/app_theme.dart';
-import 'package:myapp/data/models/coffee_model.dart';
-import 'package:myapp/presentation/blocs/cart/cart_bloc.dart';
+import 'package:myapp/presentation/theme/app_theme.dart';
+import 'package:myapp/domain/entities/coffee_entity.dart';
+import 'package:myapp/application/bloc/cart/cart_bloc.dart';
 
 class PriceActions extends StatelessWidget {
   final double price;
