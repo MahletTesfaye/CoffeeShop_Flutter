@@ -83,7 +83,10 @@ class DetailPageState extends State<DetailPage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Detail', style: TextStyle(color: AppTheme.white)),
+              const Text(
+                'Detail',
+                style: TextStyle(color: AppTheme.white),
+              ),
               ValueListenableBuilder<bool>(
                 valueListenable: isFavoriteNotifier,
                 builder: (context, isFavorite, _) {
@@ -122,29 +125,31 @@ class DetailPageState extends State<DetailPage> {
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
-                widget.coffeeItem.name,
-                style: const TextStyle(fontSize: 24),
-              ),
-              const SizedBox(height: 5),
-              Text(widget.coffeeItem.description),
+              Text(widget.coffeeItem.name,
+                  style: TextStyle(
+                      fontSize: 24, color: Theme.of(context).highlightColor)),
               const SizedBox(height: 5),
               const IngredientsRow(),
               const SizedBox(height: 5),
               const Divider(color: AppTheme.lightBlack),
               const SizedBox(height: 5),
-              const Text(
+              Text(
                 'Description',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).highlightColor),
               ),
               const SizedBox(height: 5),
-              const Text(
-                'A cappuccino is an approximately 150 ml (5oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More',
-              ),
+              Text(widget.coffeeItem.description,
+                  style: TextStyle(color: Theme.of(context).highlightColor)),
               const SizedBox(height: 5),
-              const Text(
+              Text(
                 'size',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).highlightColor),
               ),
               const SizedBox(height: 5),
               ValueListenableBuilder<String>(

@@ -24,12 +24,18 @@ class PriceActions extends StatelessWidget {
       children: [
         Column(
           children: [
-            const Text(
+            Text(
               'Price',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).highlightColor),
             ),
             const SizedBox(height: 6),
-            Text('\$ $price'),
+            Text(
+              '\$ $price',
+              style: TextStyle(color: Theme.of(context).highlightColor),
+            ),
           ],
         ),
         const Spacer(),

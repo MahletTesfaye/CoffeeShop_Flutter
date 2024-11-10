@@ -10,11 +10,18 @@ class IngredientsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Row(
+        Row(
           children: [
-            Icon(Icons.star, color: AppTheme.yellow),
-            Text('4.8', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
-            Text('(230)'),
+            const Icon(Icons.star, color: AppTheme.yellow),
+            Text('4.8',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    color: Theme.of(context).highlightColor)),
+            Text(
+              '(230)',
+              style: TextStyle(color: Theme.of(context).highlightColor),
+            ),
           ],
         ),
         Row(
@@ -23,14 +30,16 @@ class IngredientsRow extends StatelessWidget {
               'assets/icons/coffee-bean-icon.svg',
               width: 25,
               height: 25,
-              colorFilter: const ColorFilter.mode(AppTheme.brown, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(AppTheme.brown, BlendMode.srcIn),
             ),
             const SizedBox(width: 6),
             SvgPicture.asset(
               'assets/icons/milk-icon.svg',
               width: 25,
               height: 25,
-              colorFilter: const ColorFilter.mode(AppTheme.brown, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(AppTheme.brown, BlendMode.srcIn),
             ),
           ],
         ),

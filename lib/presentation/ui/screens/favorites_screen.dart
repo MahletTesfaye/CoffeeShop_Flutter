@@ -59,9 +59,11 @@ class FavoritesListState extends State<FavoritesList> {
                           ),
                         ),
                         title: Text(item.name,
-                            style: const TextStyle(color: AppTheme.brown)),
+                            style: TextStyle(
+                                color: Theme.of(context).highlightColor)),
                         subtitle: Text('\$ ${item.price.toString()}',
-                            style: const TextStyle(color: AppTheme.brown)),
+                            style: TextStyle(
+                                color: Theme.of(context).highlightColor)),
                         trailing: IconButton(
                           icon: const Icon(Icons.remove_circle,
                               color: AppTheme.red),
