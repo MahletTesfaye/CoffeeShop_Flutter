@@ -163,7 +163,7 @@ class _TopContentState extends State<TopContent> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(
-                  'assets/images/coffee4.jpg',
+                  'assets/images/coffee2.jpg',
                   width: double.infinity,
                   height: 120,
                   fit: BoxFit.cover,
